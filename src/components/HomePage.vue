@@ -5,7 +5,7 @@
 <h1>{{getLastName()}}</h1>
 <h1>{{email}}</h1>
 <h1>{{ph}}</h1>
-<h3>{{ getSum(5,5) }}</h3>
+<!-- <h3>{{ getSum(10,10) }}</h3> -->
 <button v-on:click="getAddress('Button 1')">Click</button>
 <button v-on:dblclick="getAddress('Button double click')">Click Me</button>
 <h1>Count {{ count }}</h1>
@@ -14,7 +14,8 @@
 
 <!-- two way binding -->
 <!-- Get Input tag value -->
-<input type="number" v-on:change="countValue" value="0" v-model="count" />
+<!-- v-on = @ -->
+<input type="number" @:change="countValue" value="0" v-model="count" />
 
 <!-- Get CheckBox with the help of v-model-->
 
@@ -38,10 +39,42 @@
 
 <h4>Technology: {{technology}}</h4>
 <h4>I am a: {{who}}</h4>
+
+<!--If Else-->
+
+<h1 v-if="show">If Condition</h1>
+<h1 v-else>Else Condition</h1>
+
+<button v-on:click="show = !show">{{this.show == true ? 'Else' : 'If'}}</button>
+
+<ul>
+    <li v-for="item in username" :key="item">
+        {{ item }}
+    </li>
+</ul>
+
+<br />
+<br />
+<br />
+
+<ul>
+    <li v-for="item in userdata" :key="item.id">
+        {{ item.id }}
+        {{ item.name }}
+        {{ item.Profile }}
+
+    </li>
+</ul>
+<DerivedComponent name="Ankush Sharma" :userdetail="userdata" :getSum="getSum"></DerivedComponent>
 </template>
 
 <script>
+import DerivedComponent from './DerivedComponent.vue';
 export default {
+    name: 'HomePage',
+    components: {
+        DerivedComponent
+    },
     props: {
         msg: String,
         msg2: String
@@ -49,18 +82,38 @@ export default {
     data() {
         return {
             name: 'Ankush',
-            getLastName: function () {
+            getLastName: function () {  
                 return 'Sharma'
             },
             email: 'ak123@gmail.com',
             ph: '**********',
             count: 0,
             technology: [],
-            who: null
+            who: null,
+            show: false,
+            username: ['Parminder', 'Chandra', 'Ankush', 'Jaskaran'],
+            userdata: [{
+                id: 1,
+                name: 'Parminder',
+                Profile: 'FrontEnd developer'
+            }, {
+                id: 2,
+                name: 'Chandra',
+                Profile: 'Designer'
+            }, {
+                id: 3,
+                name: 'Jaskaran',
+                Profile: 'BackEnd developer'
+            }, {
+                id: 4,
+                name: 'Ankush',
+                Profile: 'FrontEnd developer'
+            }, ]
         }
     },
     methods: {
         getSum(a, b) {
+            console.log('getSum...........')
             var sum = a + b;
             return sum;
         },
